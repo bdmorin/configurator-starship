@@ -1,0 +1,67 @@
+{
+  "name": "configurator-starship",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Local, interactive web wizard for building a starship.toml prompt config.",
+  "license": "MIT",
+  "author": "Brian Morin",
+  "homepage": "https://bdmorin.github.io/configurator-starship/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdmorin/configurator-starship.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bdmorin/configurator-starship/issues"
+  },
+  "keywords": [
+    "starship",
+    "prompt",
+    "shell",
+    "configurator",
+    "toml",
+    "wizard"
+  ],
+  "bin": {
+    "configurator-starship": "./bin/cli.ts"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "src",
+    "server.ts",
+    "vite.config.ts",
+    "tsconfig.json",
+    "index.html",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c cyan,magenta \"bun --hot server.ts\" \"vite\"",
+    "dev:server": "bun --hot server.ts",
+    "dev:web": "vite",
+    "build": "vite build",
+    "build:demo": "VITE_DEMO_MODE=1 vite build",
+    "demo:data": "bun scripts/generate-demo-data.ts",
+    "start": "NODE_ENV=production bun server.ts",
+    "cli": "bun bin/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/xterm": "^5.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "smol-toml": "^1.3.1",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "playwright": "^1.59.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  }
+}

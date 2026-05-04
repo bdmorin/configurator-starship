@@ -1,0 +1,28 @@
+# dependencies / build output
+node_modules/
+dist/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# bun
+bun.lockb
+
+# env (lockfile bun.lock is committed, .env files are not)
+.env
+.env.*
+!.env.example
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# local scratch (screenshots, smoke-test artifacts, etc.)
+tmp/

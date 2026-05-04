@@ -1,0 +1,5255 @@
+{
+  "generatedAt": "2026-05-04T20:37:02.214Z",
+  "starshipVersion": "starship 1.24.2",
+  "shell": {
+    "shell_name": "demo",
+    "starship_version": "starship 1.24.2",
+    "home_config_path": "~/.config/starship.toml",
+    "home_config_exists": false,
+    "home_config_content": ""
+  },
+  "schema": {
+    "topLevel": [
+      {
+        "name": "format",
+        "type": "string",
+        "default": "$all",
+        "description": "The full prompt format string. $module inserts a module; [text](style) applies styling."
+      },
+      {
+        "name": "right_format",
+        "type": "string",
+        "default": "",
+        "description": "Right-aligned format string (shown on the right side of the prompt)."
+      },
+      {
+        "name": "continuation_prompt",
+        "type": "string",
+        "default": "[∙](bright-black) ",
+        "description": "Prompt shown on continuation lines (multi-line commands)."
+      },
+      {
+        "name": "scan_timeout",
+        "type": "number",
+        "default": 30,
+        "description": "Max milliseconds starship will scan files before giving up (default 30)."
+      },
+      {
+        "name": "command_timeout",
+        "type": "number",
+        "default": 500,
+        "description": "Max milliseconds starship will wait for external commands."
+      },
+      {
+        "name": "add_newline",
+        "type": "boolean",
+        "default": true,
+        "description": "Add a blank line before the prompt each time."
+      },
+      {
+        "name": "follow_symlinks",
+        "type": "boolean",
+        "default": true,
+        "description": "Resolve symlinks when scanning for project markers."
+      }
+    ],
+    "modules": [
+      {
+        "name": "----------------------",
+        "fields": [],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "aws",
+        "description": "AWS profile and region (from AWS_PROFILE / AWS_REGION).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol($profile )(\\($region\\) )(\\[$duration\\] )]($style)",
+            "description": "Format string rendered when the module is active. Available variables depend on the module."
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "☁️  ",
+            "description": "Icon or text rendered at the start of the module."
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow",
+            "description": "TOML style string: e.g. 'bold yellow', 'fg:#ff0 bg:blue'."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false,
+            "description": "Hide the module entirely."
+          },
+          {
+            "name": "expiration_symbol",
+            "type": "string",
+            "default": "X"
+          },
+          {
+            "name": "force_display",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [
+          {
+            "name": "region_aliases",
+            "kind": "map"
+          },
+          {
+            "name": "profile_aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "azure",
+        "description": "Active Azure subscription.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol($subscription)]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "󰠅 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [
+          {
+            "name": "subscription_aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "battery",
+        "description": "Laptop battery level and charging state.",
+        "fields": [
+          {
+            "name": "full_symbol",
+            "type": "string",
+            "default": "󰁹 "
+          },
+          {
+            "name": "charging_symbol",
+            "type": "string",
+            "default": "󰂄 "
+          },
+          {
+            "name": "discharging_symbol",
+            "type": "string",
+            "default": "󰂃 "
+          },
+          {
+            "name": "unknown_symbol",
+            "type": "string",
+            "default": "󰁽 "
+          },
+          {
+            "name": "empty_symbol",
+            "type": "string",
+            "default": "󰂎 "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$percentage]($style) "
+          }
+        ],
+        "subTables": [],
+        "arrayTables": [
+          {
+            "name": "display",
+            "fields": [
+              {
+                "name": "threshold",
+                "type": "number",
+                "default": 10
+              },
+              {
+                "name": "style",
+                "type": "string",
+                "default": "red bold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "buf",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "with [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐃 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "buf.yaml",
+              "buf.gen.yaml",
+              "buf.work.yaml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "bun",
+        "description": "Bun version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🥟 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "bun.lock",
+              "bun.lockb",
+              "bunfig.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "c",
+        "description": "C compiler version (gcc/clang/cc).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version(-$name) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "149 bold"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "C "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "c",
+              "h"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "commands",
+            "type": "array",
+            "default": [
+              [
+                "cc",
+                "--version"
+              ],
+              [
+                "gcc",
+                "--version"
+              ],
+              [
+                "clang",
+                "--version"
+              ]
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "character",
+        "description": "The prompt character shown before your input. Changes color on command failure.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "$symbol "
+          },
+          {
+            "name": "success_symbol",
+            "type": "string",
+            "default": "[❯](bold green)",
+            "description": "Shown after the previous command succeeded."
+          },
+          {
+            "name": "error_symbol",
+            "type": "string",
+            "default": "[❯](bold red)",
+            "description": "Shown after the previous command failed."
+          },
+          {
+            "name": "vimcmd_symbol",
+            "type": "string",
+            "default": "[❮](bold green)",
+            "description": "Shown when in vi-command mode."
+          },
+          {
+            "name": "vimcmd_visual_symbol",
+            "type": "string",
+            "default": "[❮](bold yellow)"
+          },
+          {
+            "name": "vimcmd_replace_symbol",
+            "type": "string",
+            "default": "[❮](bold purple)"
+          },
+          {
+            "name": "vimcmd_replace_one_symbol",
+            "type": "string",
+            "default": "[❮](bold purple)"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "cmake",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "△ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "CMakeLists.txt",
+              "CMakeCache.txt"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "cmd_duration",
+        "description": "How long the previous command took to run.",
+        "fields": [
+          {
+            "name": "min_time",
+            "type": "number",
+            "default": 2000,
+            "description": "Only show duration when the command took at least this many ms."
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "took [$duration]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "show_milliseconds",
+            "type": "boolean",
+            "default": false,
+            "description": "Include milliseconds in the rendered duration."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "show_notifications",
+            "type": "boolean",
+            "default": false,
+            "description": "Send a desktop notification when min_time_to_notify is exceeded."
+          },
+          {
+            "name": "min_time_to_notify",
+            "type": "number",
+            "default": 45000
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "cobol",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⚙️ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "cbl",
+              "cob",
+              "CBL",
+              "COB"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "conda",
+        "description": "Active conda environment.",
+        "fields": [
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$environment]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🅒 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "green bold"
+          },
+          {
+            "name": "ignore_base",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": [
+              "!PIXI_ENVIRONMENT_NAME"
+            ]
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "container",
+        "description": "Detected container runtime (Docker, Podman, etc.).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol \\[$name\\]]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⬢"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "red bold dimmed"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "cpp",
+        "description": "C++ compiler version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version(-$name) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "149 bold"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "C++ "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "cpp",
+              "cc",
+              "cxx",
+              "c++",
+              "hpp",
+              "hh",
+              "hxx",
+              "h++",
+              "tcc"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "commands",
+            "type": "array",
+            "default": [
+              [
+                "c++",
+                "--version"
+              ],
+              [
+                "g++",
+                "--version"
+              ],
+              [
+                "clang++",
+                "--version"
+              ]
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "crystal",
+        "description": "Crystal version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🔮 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "cr"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "shard.yml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "custom",
+        "description": "User-defined modules — run a command and render its output.",
+        "fields": [],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "daml",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "Λ "
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold cyan"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "daml.yaml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "dart",
+        "description": "Dart / Flutter version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🎯 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "dart"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "pubspec.yaml",
+              "pubspec.yml",
+              "pubspec.lock"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".dart_tool"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "deno",
+        "description": "Deno version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🦕 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "green bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "deno.json",
+              "deno.jsonc",
+              "deno.lock",
+              "mod.ts",
+              "deps.ts",
+              "mod.js",
+              "deps.js"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "directory",
+        "description": "The current working directory, with truncation and substitutions.",
+        "fields": [
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 3,
+            "description": "Number of parent directories to show (default 3)."
+          },
+          {
+            "name": "truncate_to_repo",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "fish_style_pwd_dir_length",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "use_logical_path",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$path]($style)[$read_only]($read_only_style) "
+          },
+          {
+            "name": "repo_root_format",
+            "type": "string",
+            "default": "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "cyan bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "read_only",
+            "type": "string",
+            "default": "🔒",
+            "description": "Symbol shown when the directory is not writable."
+          },
+          {
+            "name": "read_only_style",
+            "type": "string",
+            "default": "red"
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "",
+            "description": "Prefix added when the path is truncated (default '')."
+          },
+          {
+            "name": "home_symbol",
+            "type": "string",
+            "default": "~",
+            "description": "Replaces $HOME in the path (default '~')."
+          },
+          {
+            "name": "use_os_path_sep",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [
+          {
+            "name": "substitutions",
+            "kind": "map",
+            "description": "Map of path substring → replacement. Useful for icons on common dirs."
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "direnv",
+        "description": "Shown when direnv is active in the current directory.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$loaded/$allowed]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "direnv "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold bright-yellow"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": [
+              "DIRENV_FILE"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              ".envrc"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "allowed_msg",
+            "type": "string",
+            "default": "allowed"
+          },
+          {
+            "name": "not_allowed_msg",
+            "type": "string",
+            "default": "not allowed"
+          },
+          {
+            "name": "denied_msg",
+            "type": "string",
+            "default": "denied"
+          },
+          {
+            "name": "loaded_msg",
+            "type": "string",
+            "default": "loaded"
+          },
+          {
+            "name": "unloaded_msg",
+            "type": "string",
+            "default": "not loaded"
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "docker_context",
+        "description": "The currently selected Docker context.",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐳 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$context]($style) "
+          },
+          {
+            "name": "only_with_files",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "compose.yml",
+              "compose.yaml",
+              "docker-compose.yml",
+              "docker-compose.yaml",
+              "Dockerfile"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "dotnet",
+        "description": ".NET SDK version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )(🎯 $tfm )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": ".NET "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "heuristic",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "csproj",
+              "fsproj",
+              "xproj"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "global.json",
+              "project.json",
+              "Directory.Build.props",
+              "Directory.Build.targets",
+              "Packages.props"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "elixir",
+        "description": "Elixir version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version \\(OTP $otp_version\\) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "💧 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "mix.exs"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "elm",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🌳 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "cyan bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "elm"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "elm.json",
+              "elm-package.json",
+              ".elm-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "elm-stuff"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "env_var",
+        "description": "Render an arbitrary environment variable.",
+        "fields": [],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "erlang",
+        "description": "Erlang/OTP version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "rebar.config",
+              "erlang.mk"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "fennel",
+        "description": "Fennel version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🧅 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold green"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "fnl"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "fill",
+        "fields": [
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold black"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "."
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "fortran",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version(-$name) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🅵  "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "f",
+              "F",
+              "for",
+              "FOR",
+              "ftn",
+              "FTN",
+              "f77",
+              "F77",
+              "f90",
+              "F90",
+              "f95",
+              "F95",
+              "f03",
+              "F03",
+              "f08",
+              "F08",
+              "f18",
+              "F18"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "fpm.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "commands",
+            "type": "array",
+            "default": [
+              [
+                "gfortran",
+                "--version"
+              ],
+              [
+                "flang",
+                "--version"
+              ],
+              [
+                "flang-new",
+                "--version"
+              ]
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "fossil_branch",
+        "description": "Current Fossil branch.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$branch]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 999999999
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "…"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "fossil_metrics",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+          },
+          {
+            "name": "added_style",
+            "type": "string",
+            "default": "bold green"
+          },
+          {
+            "name": "deleted_style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "only_nonzero_diffs",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "gcloud",
+        "description": "Active gcloud config (project, account, region).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$account(@$domain)(\\($region\\))]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "☁️  "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [
+          {
+            "name": "region_aliases",
+            "kind": "map"
+          },
+          {
+            "name": "project_aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "git_branch",
+        "description": "Current git branch and tracking info.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$branch(:$remote_branch)]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 999999999
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "…"
+          },
+          {
+            "name": "only_attached",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "always_show_remote",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "ignore_branches",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "ignore_bare_repo",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "git_commit",
+        "description": "Current commit hash (when detached HEAD or tagged).",
+        "fields": [
+          {
+            "name": "commit_hash_length",
+            "type": "number",
+            "default": 7
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[\\($hash$tag\\)]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "green bold"
+          },
+          {
+            "name": "only_detached",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "tag_symbol",
+            "type": "string",
+            "default": " 🏷  "
+          },
+          {
+            "name": "tag_disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "tag_max_candidates",
+            "type": "number",
+            "default": 0
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "git_metrics",
+        "description": "Added/removed line counts in the working tree.",
+        "fields": [
+          {
+            "name": "added_style",
+            "type": "string",
+            "default": "bold green"
+          },
+          {
+            "name": "deleted_style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "only_nonzero_diffs",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "ignore_submodules",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "git_state",
+        "description": "Git operation in progress (rebase, merge, etc.).",
+        "fields": [
+          {
+            "name": "rebase",
+            "type": "string",
+            "default": "REBASING"
+          },
+          {
+            "name": "merge",
+            "type": "string",
+            "default": "MERGING"
+          },
+          {
+            "name": "revert",
+            "type": "string",
+            "default": "REVERTING"
+          },
+          {
+            "name": "cherry_pick",
+            "type": "string",
+            "default": "CHERRY-PICKING"
+          },
+          {
+            "name": "bisect",
+            "type": "string",
+            "default": "BISECTING"
+          },
+          {
+            "name": "am",
+            "type": "string",
+            "default": "AM"
+          },
+          {
+            "name": "am_or_rebase",
+            "type": "string",
+            "default": "AM/REBASE"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "\\([$state( $progress_current/$progress_total)]($style)\\) "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "git_status",
+        "description": "Working-tree status: staged, unstaged, ahead, behind.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "([\\[$all_status$ahead_behind\\]]($style) )"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "red bold"
+          },
+          {
+            "name": "stashed",
+            "type": "string",
+            "default": "\\$"
+          },
+          {
+            "name": "ahead",
+            "type": "string",
+            "default": "⇡",
+            "description": "Format token when the branch is ahead of its upstream."
+          },
+          {
+            "name": "behind",
+            "type": "string",
+            "default": "⇣",
+            "description": "Format token when the branch is behind its upstream."
+          },
+          {
+            "name": "up_to_date",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "diverged",
+            "type": "string",
+            "default": "⇕"
+          },
+          {
+            "name": "conflicted",
+            "type": "string",
+            "default": "=",
+            "description": "Format token for unresolved merge conflicts."
+          },
+          {
+            "name": "deleted",
+            "type": "string",
+            "default": "✘"
+          },
+          {
+            "name": "renamed",
+            "type": "string",
+            "default": "»"
+          },
+          {
+            "name": "modified",
+            "type": "string",
+            "default": "!",
+            "description": "Format token for modified files."
+          },
+          {
+            "name": "staged",
+            "type": "string",
+            "default": "+",
+            "description": "Format token for staged files."
+          },
+          {
+            "name": "untracked",
+            "type": "string",
+            "default": "?",
+            "description": "Format token for untracked files."
+          },
+          {
+            "name": "typechanged",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "ignore_submodules",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "use_git_executable",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "gleam",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⭐ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold #FFAFF3"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "gleam"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "gleam.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "golang",
+        "description": "Go version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐹 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold cyan"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "not_capable_style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "go"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "go.mod",
+              "go.sum",
+              "go.work",
+              "glide.yaml",
+              "Gopkg.yml",
+              "Gopkg.lock",
+              ".go-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "Godeps"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "gradle",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🅶 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold bright-cyan"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "recursive",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "gradle",
+              "gradle.kts"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "gradle"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "guix_shell",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐃 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "haskell",
+        "description": "Haskell GHC version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "λ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "hs",
+              "cabal",
+              "hs-boot"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "stack.yaml",
+              "cabal.project"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "haxe",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⌘ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold fg:202"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "hx",
+              "hxml"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "haxelib.json",
+              "hxformat.json",
+              ".haxerc"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".haxelib",
+              "haxe_libraries"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "helm",
+        "description": "Helm version in directories with charts.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⎈ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold white"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "helmfile.yaml",
+              "Chart.yaml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "hg_branch",
+        "description": "Current Mercurial branch.",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$branch(:$topic)]($style) "
+          },
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 999999999
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "…"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "hg_state",
+        "fields": [
+          {
+            "name": "merge",
+            "type": "string",
+            "default": "MERGING"
+          },
+          {
+            "name": "rebase",
+            "type": "string",
+            "default": "REBASING"
+          },
+          {
+            "name": "update",
+            "type": "string",
+            "default": "UPDATING"
+          },
+          {
+            "name": "bisect",
+            "type": "string",
+            "default": "BISECTING"
+          },
+          {
+            "name": "shelve",
+            "type": "string",
+            "default": "SHELVING"
+          },
+          {
+            "name": "graft",
+            "type": "string",
+            "default": "GRAFTING"
+          },
+          {
+            "name": "transplant",
+            "type": "string",
+            "default": "TRANSPLANTING"
+          },
+          {
+            "name": "histedit",
+            "type": "string",
+            "default": "HISTEDITING"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "\\([$state]($style)\\) "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "hostname",
+        "description": "The system hostname — optionally only shown over SSH.",
+        "fields": [
+          {
+            "name": "ssh_only",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "ssh_symbol",
+            "type": "string",
+            "default": "🌐 "
+          },
+          {
+            "name": "trim_at",
+            "type": "string",
+            "default": "."
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$ssh_symbol$hostname]($style) in "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "green dimmed bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [
+          {
+            "name": "aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "java",
+        "description": "Java version.",
+        "fields": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "red dimmed"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "☕ "
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "java",
+              "class",
+              "jar",
+              "gradle",
+              "clj",
+              "cljc"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "pom.xml",
+              "build.gradle.kts",
+              "build.sbt",
+              ".java-version",
+              "deps.edn",
+              "project.clj",
+              "build.boot",
+              ".sdkmanrc"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "jobs",
+        "description": "Number of currently running background jobs.",
+        "fields": [
+          {
+            "name": "threshold",
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "symbol_threshold",
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "number_threshold",
+            "type": "number",
+            "default": 2
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$number]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "✦"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "julia",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "ஃ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "jl"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Project.toml",
+              "Manifest.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "kotlin",
+        "description": "Kotlin version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🅺 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "kotlin_binary",
+            "type": "string",
+            "default": "kotlin"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "kt",
+              "kts"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "kubernetes",
+        "description": "The active kubeconfig context and namespace.",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "☸ "
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$context( \\($namespace\\))]($style) in "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "cyan bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "contexts",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [
+          {
+            "name": "context_aliases",
+            "kind": "map"
+          },
+          {
+            "name": "user_aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "line_break",
+        "description": "Inserts a blank line between the status segments and the input line.",
+        "fields": [
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "localip",
+        "fields": [
+          {
+            "name": "ssh_only",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$localipv4]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "lua",
+        "description": "Lua interpreter version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🌙 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "lua_binary",
+            "type": "string",
+            "default": "lua"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "lua"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              ".lua-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "lua"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "memory_usage",
+        "description": "System RAM and swap usage.",
+        "fields": [
+          {
+            "name": "threshold",
+            "type": "number",
+            "default": 75
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via $symbol[$ram( | $swap)]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "white bold dimmed"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐏 "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "meson",
+        "fields": [
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 4294967295
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "…"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$project]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⬢ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "mise",
+        "description": "Active mise tools.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$health]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "mise "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "mise.toml",
+              "mise.local.toml",
+              ".mise.toml",
+              ".mise.local.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".mise"
+            ]
+          },
+          {
+            "name": "healthy_symbol",
+            "type": "string",
+            "default": "healthy"
+          },
+          {
+            "name": "unhealthy_symbol",
+            "type": "string",
+            "default": "unhealthy"
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "mojo",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "with [$symbol($version )]($style)"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🔥 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold 208"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "mojo",
+              "🔥"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "nats",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol($name )]($style)"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "✉️ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "netns",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol \\[$name\\]]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🛜"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold dimmed"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "nim",
+        "description": "Nim version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "👑 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "nim",
+              "nims",
+              "nimble"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "nim.cfg"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "nix_shell",
+        "description": "Shown inside a `nix-shell`/`nix develop`.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$state( \\($name\\))]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "❄️  "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "impure_msg",
+            "type": "string",
+            "default": "impure"
+          },
+          {
+            "name": "pure_msg",
+            "type": "string",
+            "default": "pure"
+          },
+          {
+            "name": "unknown_msg",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "heuristic",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "nodejs",
+        "description": "Node.js version when package.json / *.js is present.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold green"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "not_capable_style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "js",
+              "mjs",
+              "cjs",
+              "ts",
+              "mts",
+              "cts"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "package.json",
+              ".node-version",
+              ".nvmrc",
+              "!bunfig.toml",
+              "!bun.lock",
+              "!bun.lockb"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "node_modules"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "ocaml",
+        "description": "OCaml version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )(\\($switch_indicator$switch_name\\) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "global_switch_indicator",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "local_switch_indicator",
+            "type": "string",
+            "default": "*"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐫 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "opam",
+              "ml",
+              "mli",
+              "re",
+              "rei"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "dune",
+              "dune-project",
+              "jbuild",
+              "jbuild-ignore",
+              ".merlin"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              "_opam",
+              "esy.lock"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "odin",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "show_commit",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "Ø "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold bright-blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "odin"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "opa",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🪖 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "rego"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "openstack",
+        "description": "Active OpenStack cloud + project.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$cloud(\\($project\\))]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "☁️  "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "os",
+        "description": "An OS-specific icon for the current platform.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol]($style)"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold white"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [
+          {
+            "name": "symbols",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "package",
+        "description": "Version from package metadata (package.json, Cargo.toml, …).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "is [$symbol$version]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "📦 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "208 bold"
+          },
+          {
+            "name": "display_private",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "perl",
+        "description": "Perl version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐪 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "149 bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "pl",
+              "pm",
+              "pod"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Makefile.PL",
+              "Build.PL",
+              "cpanfile",
+              "cpanfile.snapshot",
+              "META.json",
+              "META.yml",
+              ".perl-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "php",
+        "description": "PHP version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐘 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "147 bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "php"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "composer.json",
+              ".php-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "pijul_channel",
+        "description": "Current Pijul channel.",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold purple"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "on [$symbol$channel]($style) "
+          },
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 999999999
+          },
+          {
+            "name": "truncation_symbol",
+            "type": "string",
+            "default": "…"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "pixi",
+        "description": "Active pixi environment.",
+        "fields": [
+          {
+            "name": "pixi_binary",
+            "type": "array",
+            "default": [
+              "pixi"
+            ]
+          },
+          {
+            "name": "show_default_environment",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )(\\($environment\\) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🧚 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "pixi.toml",
+              "pixi.lock"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "pulumi",
+        "description": "Active Pulumi stack.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($username@)$stack]($style) "
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": " "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold 5"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "search_upwards",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "purescript",
+        "description": "PureScript version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "<=> "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold white"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "purs"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "spago.dhall",
+              "spago.yaml",
+              "spago.lock"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "python",
+        "description": "Python version and active virtualenv/conda env.",
+        "fields": [
+          {
+            "name": "pyenv_version_name",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "pyenv_prefix",
+            "type": "string",
+            "default": "pyenv "
+          },
+          {
+            "name": "python_binary",
+            "type": "array",
+            "default": [
+              [
+                "python"
+              ],
+              [
+                "python3"
+              ],
+              [
+                "python2"
+              ]
+            ]
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐍 "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "py",
+              "ipynb"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "requirements.txt",
+              ".python-version",
+              "pyproject.toml",
+              "Pipfile",
+              "tox.ini",
+              "setup.py",
+              "__init__.py"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": [
+              "VIRTUAL_ENV"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "quarto",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⨁ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold #75AADB"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "qmd"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "_quarto.yml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "raku",
+        "description": "Raku version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version-$vm_version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🦋 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "149 bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "p6",
+              "pm6",
+              "pod6",
+              "raku",
+              "rakumod"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "META6.json"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "red",
+        "description": "Red version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🔺 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "red bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "red",
+              "reds"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "rlang",
+        "description": "R version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "📐 "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "R",
+              "Rd",
+              "Rmd",
+              "Rproj",
+              "Rsx"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "DESCRIPTION"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".Rproj.user"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "ruby",
+        "description": "Ruby version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "💎 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "rb"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Gemfile",
+              ".ruby-version"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_variables",
+            "type": "array",
+            "default": [
+              "RUBY_VERSION",
+              "RBENV_VERSION"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "rust",
+        "description": "Rust toolchain version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🦀 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "rs"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Cargo.toml"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "scala",
+        "description": "Scala version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "red bold"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🆂 "
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "sbt",
+              "scala"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              ".scalaenv",
+              ".sbtenv",
+              "build.sbt"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".metals"
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "shell",
+        "description": "The currently running shell (bash/zsh/fish/…).",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$indicator]($style) "
+          },
+          {
+            "name": "bash_indicator",
+            "type": "string",
+            "default": "bsh"
+          },
+          {
+            "name": "fish_indicator",
+            "type": "string",
+            "default": "fsh"
+          },
+          {
+            "name": "zsh_indicator",
+            "type": "string",
+            "default": "zsh"
+          },
+          {
+            "name": "powershell_indicator",
+            "type": "string",
+            "default": "psh"
+          },
+          {
+            "name": "ion_indicator",
+            "type": "string",
+            "default": "ion"
+          },
+          {
+            "name": "elvish_indicator",
+            "type": "string",
+            "default": "esh"
+          },
+          {
+            "name": "tcsh_indicator",
+            "type": "string",
+            "default": "tsh"
+          },
+          {
+            "name": "nu_indicator",
+            "type": "string",
+            "default": "nu"
+          },
+          {
+            "name": "xonsh_indicator",
+            "type": "string",
+            "default": "xsh"
+          },
+          {
+            "name": "cmd_indicator",
+            "type": "string",
+            "default": "cmd"
+          },
+          {
+            "name": "unknown_indicator",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "white bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "shlvl",
+        "description": "Current shell nesting level ($SHLVL).",
+        "fields": [
+          {
+            "name": "threshold",
+            "type": "number",
+            "default": 2
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$shlvl]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "↕️  "
+          },
+          {
+            "name": "repeat",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "repeat_offset",
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "singularity",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol\\[$env\\]]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold dimmed"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "solidity",
+        "description": "Solidity compiler version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version)]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${major}.${minor}.${patch}"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "S "
+          },
+          {
+            "name": "compiler",
+            "type": "array",
+            "default": [
+              "solc"
+            ]
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "sol"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "spack",
+        "fields": [
+          {
+            "name": "truncation_length",
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$environment]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🅢 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "status",
+        "description": "The exit status of the previous command.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$symbol$status]($style) "
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "❌"
+          },
+          {
+            "name": "success_symbol",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "not_executable_symbol",
+            "type": "string",
+            "default": "🚫"
+          },
+          {
+            "name": "not_found_symbol",
+            "type": "string",
+            "default": "🔍"
+          },
+          {
+            "name": "sigint_symbol",
+            "type": "string",
+            "default": "🧱"
+          },
+          {
+            "name": "signal_symbol",
+            "type": "string",
+            "default": "⚡"
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold red"
+          },
+          {
+            "name": "map_symbol",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "recognize_signal_code",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "pipestatus",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "pipestatus_separator",
+            "type": "string",
+            "default": "|"
+          },
+          {
+            "name": "pipestatus_format",
+            "type": "string",
+            "default": "\\[$pipestatus\\] => [$symbol$common_meaning$signal_name$maybe_int]($style) "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "sudo",
+        "description": "Shown when sudo credentials are cached.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[as $symbol]($style)"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🧙 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold blue"
+          },
+          {
+            "name": "allow_windows",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "Supported modules list",
+        "fields": [],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "swift",
+        "description": "Swift version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "🐦 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold 202"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "swift"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Package.swift"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "terraform",
+        "description": "Terraform workspace and version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol$workspace]($style) "
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "💠 "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold 105"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "tf",
+              "tfplan",
+              "tfstate"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": [
+              ".terraform"
+            ]
+          },
+          {
+            "name": "commands",
+            "type": "array",
+            "default": [
+              [
+                "terraform",
+                "version"
+              ],
+              [
+                "tofu",
+                "version"
+              ]
+            ]
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "time",
+        "description": "The current local time.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "at [$time]($style) "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "use_12hr",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": true,
+            "description": "The time module is disabled by default; flip to show it."
+          },
+          {
+            "name": "utc_time_offset",
+            "type": "string",
+            "default": "local"
+          },
+          {
+            "name": "time_range",
+            "type": "string",
+            "default": "-"
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "typst",
+        "description": "Typst version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "t "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold #0093A7"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "typ"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "template.typ"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "username",
+        "description": "The active user's username.",
+        "fields": [
+          {
+            "name": "detect_env_vars",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "[$user]($style) in "
+          },
+          {
+            "name": "style_root",
+            "type": "string",
+            "default": "red bold"
+          },
+          {
+            "name": "style_user",
+            "type": "string",
+            "default": "yellow bold"
+          },
+          {
+            "name": "show_always",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [
+          {
+            "name": "aliases",
+            "kind": "map"
+          }
+        ],
+        "arrayTables": []
+      },
+      {
+        "name": "vagrant",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "⍱ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "cyan bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "Vagrantfile"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "vcsh",
+        "fields": [
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": ""
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "format",
+            "type": "string",
+            "default": "vcsh [$symbol$repo]($style) "
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "vlang",
+        "description": "V language version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "V "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "blue bold"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "v"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "v.mod",
+              "vpkg.json",
+              ".vpkg-lock.json"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "xmake",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "△ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold green"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": [
+              "xmake.lua"
+            ]
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      },
+      {
+        "name": "zig",
+        "description": "Zig version.",
+        "fields": [
+          {
+            "name": "format",
+            "type": "string",
+            "default": "via [$symbol($version )]($style)"
+          },
+          {
+            "name": "version_format",
+            "type": "string",
+            "default": "v${raw}"
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "default": "↯ "
+          },
+          {
+            "name": "style",
+            "type": "string",
+            "default": "bold yellow"
+          },
+          {
+            "name": "disabled",
+            "type": "boolean",
+            "default": false
+          },
+          {
+            "name": "detect_extensions",
+            "type": "array",
+            "default": [
+              "zig"
+            ]
+          },
+          {
+            "name": "detect_files",
+            "type": "array",
+            "default": []
+          },
+          {
+            "name": "detect_folders",
+            "type": "array",
+            "default": []
+          }
+        ],
+        "subTables": [],
+        "arrayTables": []
+      }
+    ],
+    "moduleNames": [
+      "----------------------",
+      "aws",
+      "azure",
+      "battery",
+      "buf",
+      "bun",
+      "c",
+      "character",
+      "cmake",
+      "cmd_duration",
+      "cobol",
+      "conda",
+      "container",
+      "cpp",
+      "crystal",
+      "custom",
+      "daml",
+      "dart",
+      "deno",
+      "directory",
+      "direnv",
+      "docker_context",
+      "dotnet",
+      "elixir",
+      "elm",
+      "env_var",
+      "erlang",
+      "fennel",
+      "fill",
+      "fortran",
+      "fossil_branch",
+      "fossil_metrics",
+      "gcloud",
+      "git_branch",
+      "git_commit",
+      "git_metrics",
+      "git_state",
+      "git_status",
+      "gleam",
+      "golang",
+      "gradle",
+      "guix_shell",
+      "haskell",
+      "haxe",
+      "helm",
+      "hg_branch",
+      "hg_state",
+      "hostname",
+      "java",
+      "jobs",
+      "julia",
+      "kotlin",
+      "kubernetes",
+      "line_break",
+      "localip",
+      "lua",
+      "memory_usage",
+      "meson",
+      "mise",
+      "mojo",
+      "nats",
+      "netns",
+      "nim",
+      "nix_shell",
+      "nodejs",
+      "ocaml",
+      "odin",
+      "opa",
+      "openstack",
+      "os",
+      "package",
+      "perl",
+      "php",
+      "pijul_channel",
+      "pixi",
+      "pulumi",
+      "purescript",
+      "python",
+      "quarto",
+      "raku",
+      "red",
+      "rlang",
+      "ruby",
+      "rust",
+      "scala",
+      "shell",
+      "shlvl",
+      "singularity",
+      "solidity",
+      "spack",
+      "status",
+      "sudo",
+      "Supported modules list",
+      "swift",
+      "terraform",
+      "time",
+      "typst",
+      "username",
+      "vagrant",
+      "vcsh",
+      "vlang",
+      "xmake",
+      "zig"
+    ]
+  },
+  "presets": {
+    "bracketed-segments": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\n[aws]\nformat = '\\[[$symbol($profile)(\\($region\\))(\\[$duration\\])]($style)\\]'\n\n[azure]\nformat = '\\[[$symbol($subscription)]($style)\\]'\n\n[battery]\nformat = '\\[[$symbol$percentage]($style)\\]'\n\n[buf]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[bun]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[c]\nformat = '\\[[$symbol($version(-$name))]($style)\\]'\n\n[cmake]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[cmd_duration]\nformat = '\\[[⏱ $duration]($style)\\]'\n\n[cobol]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[conda]\nformat = '\\[[$symbol$environment]($style)\\]'\n\n[container]\nformat = '\\[[$symbol \\[$name\\]]($style)\\]'\n\n[cpp]\nformat = '\\[[$symbol($version(-$name))]($style)\\]'\n\n[crystal]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[daml]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[dart]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[deno]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[direnv]\nformat = '\\[[$symbol$loaded/$allowed]($style)\\]'\n\n[docker_context]\nformat = '\\[[$symbol$context]($style)\\]'\n\n[dotnet]\nformat = '\\[[$symbol($version)(🎯 $tfm)]($style)\\]'\n\n[elixir]\nformat = '\\[[$symbol($version \\(OTP $otp_version\\))]($style)\\]'\n\n[elm]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[erlang]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[fennel]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[fortran]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[fossil_branch]\nformat = '\\[[$symbol$branch]($style)\\]'\n\n[fossil_metrics]\nformat = '\\[[+$added]($added_style)\\]\\[[-$deleted]($deleted_style)\\]'\n\n[gcloud]\nformat = '\\[[$symbol$account(@$domain)(\\($region\\))]($style)\\]'\n\n[git_branch]\nformat = '\\[[$symbol$branch]($style)\\]'\n\n[git_commit]\nformat = '\\[[\\($hash$tag\\)]($style)\\]'\n\n[git_metrics]\nformat = '\\[[+$added]($added_style)\\]\\[[-$deleted]($deleted_style)\\]'\n\n[git_state]\nformat = '\\[[$state ($progress_current/$progress_total)]($style)\\]'\n\n[git_status]\nformat = '([\\[$all_status$ahead_behind\\]]($style))'\n\n[gleam]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[golang]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[gradle]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[guix_shell]\nformat = '\\[[$symbol]($style)\\]'\n\n[haskell]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[haxe]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[helm]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[hg_branch]\nformat = '\\[[$symbol$branch]($style)\\]'\n\n[hostname]\nformat = '\\[[$ssh_symbol($hostname)]($style)\\] '\n\n[java]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[jobs]\nformat = '\\[[$symbol$number]($style)\\]'\n\n[julia]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[kotlin]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[kubernetes]\nformat = '\\[[$symbol$context( \\($namespace\\))]($style)\\]'\n\n[localip]\nformat = '\\[[$localipv4]($style)\\]'\n\n[lua]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[memory_usage]\nformat = '\\[$symbol[$ram( | $swap)]($style)\\]'\n\n[meson]\nformat = '\\[[$symbol$project]($style)\\]'\n\n[mise]\nformat = '\\[[$symbol$health]($style)\\]'\n\n[mojo]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[nats]\nformat = '\\[[$symbol$name]($style)\\]'\n\n[netns]\nformat = '\\[[$symbol \\[$name\\]]($style)\\]'\n\n[nim]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[nix_shell]\nformat = '\\[[$symbol$state( \\($name\\))]($style)\\]'\n\n[nodejs]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[ocaml]\nformat = '\\[[$symbol($version)(\\($switch_indicator$switch_name\\))]($style)\\]'\n\n[odin]\nformat = '\\[[$symbol($version )]($style)\\]'\n\n[opa]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[openstack]\nformat = '\\[[$symbol$cloud(\\($project\\))]($style)\\]'\n\n[os]\nformat = '\\[[$symbol]($style)\\]'\n\n[package]\nformat = '\\[[$symbol$version]($style)\\]'\n\n[perl]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[php]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[pijul_channel]\nformat = '\\[[$symbol$channel]($style)\\]'\n\n[pixi]\nformat = '\\[[$symbol$version( $environment)]($style)\\]'\n\n[pulumi]\nformat = '\\[[$symbol$stack]($style)\\]'\n\n[purescript]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[python]\nformat = '\\[[${symbol}${pyenv_prefix}(${version})(\\($virtualenv\\))]($style)\\]'\n\n[quarto]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[raku]\nformat = '\\[[$symbol($version-$vm_version)]($style)\\]'\n\n[red]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[rlang]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[ruby]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[rust]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[scala]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[shell]\nformat = '\\[[$indicator]($style)\\]'\n\n[singularity]\nformat = '\\[[$symbol\\[$env\\]]($style)\\]'\n\n[solidity]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[spack]\nformat = '\\[[$symbol$environment]($style)\\]'\n\n[status]\nformat = '\\[[$symbol$status]($style)\\]'\n\n[sudo]\nformat = '\\[[as $symbol]($style)\\]'\n\n[swift]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[terraform]\nformat = '\\[[$symbol$workspace]($style)\\]'\n\n[time]\nformat = '\\[[$time]($style)\\]'\n\n[typst]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[username]\nformat = '\\[[$user]($style)\\]'\n\n[vagrant]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[vcsh]\nformat = '\\[vcsh [$symbol$repo]($style)\\]'\n\n[vlang]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[xmake]\nformat = '\\[[$symbol($version)]($style)\\]'\n\n[zig]\nformat = '\\[[$symbol($version)]($style)\\]'\n",
+    "catppuccin-powerline": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\nformat = \"\"\"\n[](red)\\\n$os\\\n$username\\\n[](bg:peach fg:red)\\\n$directory\\\n[](bg:yellow fg:peach)\\\n$git_branch\\\n$git_status\\\n[](fg:yellow bg:green)\\\n$c\\\n$rust\\\n$golang\\\n$nodejs\\\n$php\\\n$java\\\n$kotlin\\\n$haskell\\\n$python\\\n[](fg:green bg:sapphire)\\\n$conda\\\n[](fg:sapphire bg:lavender)\\\n$time\\\n[ ](fg:lavender)\\\n$cmd_duration\\\n$line_break\\\n$character\"\"\"\n\npalette = 'catppuccin_mocha'\n\n[os]\ndisabled = false\nstyle = \"bg:red fg:crust\"\n\n[os.symbols]\nWindows = \"\"\nUbuntu = \"󰕈\"\nSUSE = \"\"\nRaspbian = \"󰐿\"\nMint = \"󰣭\"\nMacos = \"󰀵\"\nManjaro = \"\"\nLinux = \"󰌽\"\nGentoo = \"󰣨\"\nFedora = \"󰣛\"\nAlpine = \"\"\nAmazon = \"\"\nAndroid = \"\"\nAOSC = \"\"\nArch = \"󰣇\"\nArtix = \"󰣇\"\nCentOS = \"\"\nDebian = \"󰣚\"\nRedhat = \"󱄛\"\nRedHatEnterprise = \"󱄛\"\n\n[username]\nshow_always = true\nstyle_user = \"bg:red fg:crust\"\nstyle_root = \"bg:red fg:crust\"\nformat = '[ $user]($style)'\n\n[directory]\nstyle = \"bg:peach fg:crust\"\nformat = \"[ $path ]($style)\"\ntruncation_length = 3\ntruncation_symbol = \"…/\"\n\n[directory.substitutions]\n\"Documents\" = \"󰈙 \"\n\"Downloads\" = \" \"\n\"Music\" = \"󰝚 \"\n\"Pictures\" = \" \"\n\"Developer\" = \"󰲋 \"\n\n[git_branch]\nsymbol = \"\"\nstyle = \"bg:yellow\"\nformat = '[[ $symbol $branch ](fg:crust bg:yellow)]($style)'\n\n[git_status]\nstyle = \"bg:yellow\"\nformat = '[[($all_status$ahead_behind )](fg:crust bg:yellow)]($style)'\n\n[nodejs]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[c]\nsymbol = \" \"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[rust]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[golang]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[php]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[java]\nsymbol = \" \"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[kotlin]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[haskell]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'\n\n[python]\nsymbol = \"\"\nstyle = \"bg:green\"\nformat = '[[ $symbol( $version)(\\(#$virtualenv\\)) ](fg:crust bg:green)]($style)'\n\n[docker_context]\nsymbol = \"\"\nstyle = \"bg:sapphire\"\nformat = '[[ $symbol( $context) ](fg:crust bg:sapphire)]($style)'\n\n[conda]\nsymbol = \"  \"\nstyle = \"fg:crust bg:sapphire\"\nformat = '[$symbol$environment ]($style)'\nignore_base = false\n\n[time]\ndisabled = false\ntime_format = \"%R\"\nstyle = \"bg:lavender\"\nformat = '[[  $time ](fg:crust bg:lavender)]($style)'\n\n[line_break]\ndisabled = true\n\n[character]\ndisabled = false\nsuccess_symbol = '[❯](bold fg:green)'\nerror_symbol = '[❯](bold fg:red)'\nvimcmd_symbol = '[❮](bold fg:green)'\nvimcmd_replace_one_symbol = '[❮](bold fg:lavender)'\nvimcmd_replace_symbol = '[❮](bold fg:lavender)'\nvimcmd_visual_symbol = '[❮](bold fg:yellow)'\n\n[cmd_duration]\nshow_milliseconds = true\nformat = \" in $duration \"\nstyle = \"bg:lavender\"\ndisabled = false\nshow_notifications = true\nmin_time_to_notify = 45000\n\n[palettes.catppuccin_mocha]\nrosewater = \"#f5e0dc\"\nflamingo = \"#f2cdcd\"\npink = \"#f5c2e7\"\nmauve = \"#cba6f7\"\nred = \"#f38ba8\"\nmaroon = \"#eba0ac\"\npeach = \"#fab387\"\nyellow = \"#f9e2af\"\ngreen = \"#a6e3a1\"\nteal = \"#94e2d5\"\nsky = \"#89dceb\"\nsapphire = \"#74c7ec\"\nblue = \"#89b4fa\"\nlavender = \"#b4befe\"\ntext = \"#cdd6f4\"\nsubtext1 = \"#bac2de\"\nsubtext0 = \"#a6adc8\"\noverlay2 = \"#9399b2\"\noverlay1 = \"#7f849c\"\noverlay0 = \"#6c7086\"\nsurface2 = \"#585b70\"\nsurface1 = \"#45475a\"\nsurface0 = \"#313244\"\nbase = \"#1e1e2e\"\nmantle = \"#181825\"\ncrust = \"#11111b\"\n\n[palettes.catppuccin_frappe]\nrosewater = \"#f2d5cf\"\nflamingo = \"#eebebe\"\npink = \"#f4b8e4\"\nmauve = \"#ca9ee6\"\nred = \"#e78284\"\nmaroon = \"#ea999c\"\npeach = \"#ef9f76\"\nyellow = \"#e5c890\"\ngreen = \"#a6d189\"\nteal = \"#81c8be\"\nsky = \"#99d1db\"\nsapphire = \"#85c1dc\"\nblue = \"#8caaee\"\nlavender = \"#babbf1\"\ntext = \"#c6d0f5\"\nsubtext1 = \"#b5bfe2\"\nsubtext0 = \"#a5adce\"\noverlay2 = \"#949cbb\"\noverlay1 = \"#838ba7\"\noverlay0 = \"#737994\"\nsurface2 = \"#626880\"\nsurface1 = \"#51576d\"\nsurface0 = \"#414559\"\nbase = \"#303446\"\nmantle = \"#292c3c\"\ncrust = \"#232634\"\n\n[palettes.catppuccin_latte]\nrosewater = \"#dc8a78\"\nflamingo = \"#dd7878\"\npink = \"#ea76cb\"\nmauve = \"#8839ef\"\nred = \"#d20f39\"\nmaroon = \"#e64553\"\npeach = \"#fe640b\"\nyellow = \"#df8e1d\"\ngreen = \"#40a02b\"\nteal = \"#179299\"\nsky = \"#04a5e5\"\nsapphire = \"#209fb5\"\nblue = \"#1e66f5\"\nlavender = \"#7287fd\"\ntext = \"#4c4f69\"\nsubtext1 = \"#5c5f77\"\nsubtext0 = \"#6c6f85\"\noverlay2 = \"#7c7f93\"\noverlay1 = \"#8c8fa1\"\noverlay0 = \"#9ca0b0\"\nsurface2 = \"#acb0be\"\nsurface1 = \"#bcc0cc\"\nsurface0 = \"#ccd0da\"\nbase = \"#eff1f5\"\nmantle = \"#e6e9ef\"\ncrust = \"#dce0e8\"\n\n[palettes.catppuccin_macchiato]\nrosewater = \"#f4dbd6\"\nflamingo = \"#f0c6c6\"\npink = \"#f5bde6\"\nmauve = \"#c6a0f6\"\nred = \"#ed8796\"\nmaroon = \"#ee99a0\"\npeach = \"#f5a97f\"\nyellow = \"#eed49f\"\ngreen = \"#a6da95\"\nteal = \"#8bd5ca\"\nsky = \"#91d7e3\"\nsapphire = \"#7dc4e4\"\nblue = \"#8aadf4\"\nlavender = \"#b7bdf8\"\ntext = \"#cad3f5\"\nsubtext1 = \"#b8c0e0\"\nsubtext0 = \"#a5adcb\"\noverlay2 = \"#939ab7\"\noverlay1 = \"#8087a2\"\noverlay0 = \"#6e738d\"\nsurface2 = \"#5b6078\"\nsurface1 = \"#494d64\"\nsurface0 = \"#363a4f\"\nbase = \"#24273a\"\nmantle = \"#1e2030\"\ncrust = \"#181926\"\n",
+    "gruvbox-rainbow": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\nformat = \"\"\"\n[](color_orange)\\\n$os\\\n$username\\\n[](bg:color_yellow fg:color_orange)\\\n$directory\\\n[](fg:color_yellow bg:color_aqua)\\\n$git_branch\\\n$git_status\\\n[](fg:color_aqua bg:color_blue)\\\n$c\\\n$cpp\\\n$rust\\\n$golang\\\n$nodejs\\\n$php\\\n$java\\\n$kotlin\\\n$haskell\\\n$python\\\n[](fg:color_blue bg:color_bg3)\\\n$docker_context\\\n$conda\\\n$pixi\\\n[](fg:color_bg3 bg:color_bg1)\\\n$time\\\n[ ](fg:color_bg1)\\\n$line_break$character\"\"\"\n\npalette = 'gruvbox_dark'\n\n[palettes.gruvbox_dark]\ncolor_fg0 = '#fbf1c7'\ncolor_bg1 = '#3c3836'\ncolor_bg3 = '#665c54'\ncolor_blue = '#458588'\ncolor_aqua = '#689d6a'\ncolor_green = '#98971a'\ncolor_orange = '#d65d0e'\ncolor_purple = '#b16286'\ncolor_red = '#cc241d'\ncolor_yellow = '#d79921'\n\n[os]\ndisabled = false\nstyle = \"bg:color_orange fg:color_fg0\"\n\n[os.symbols]\nWindows = \"󰍲\"\nUbuntu = \"󰕈\"\nSUSE = \"\"\nRaspbian = \"󰐿\"\nMint = \"󰣭\"\nMacos = \"󰀵\"\nManjaro = \"\"\nLinux = \"󰌽\"\nGentoo = \"󰣨\"\nFedora = \"󰣛\"\nAlpine = \"\"\nAmazon = \"\"\nAndroid = \"\"\nAOSC = \"\"\nArch = \"󰣇\"\nArtix = \"󰣇\"\nEndeavourOS = \"\"\nCentOS = \"\"\nDebian = \"󰣚\"\nRedhat = \"󱄛\"\nRedHatEnterprise = \"󱄛\"\nPop = \"\"\n\n[username]\nshow_always = true\nstyle_user = \"bg:color_orange fg:color_fg0\"\nstyle_root = \"bg:color_orange fg:color_fg0\"\nformat = '[ $user ]($style)'\n\n[directory]\nstyle = \"fg:color_fg0 bg:color_yellow\"\nformat = \"[ $path ]($style)\"\ntruncation_length = 3\ntruncation_symbol = \"…/\"\n\n[directory.substitutions]\n\"Documents\" = \"󰈙 \"\n\"Downloads\" = \" \"\n\"Music\" = \"󰝚 \"\n\"Pictures\" = \" \"\n\"Developer\" = \"󰲋 \"\n\n[git_branch]\nsymbol = \"\"\nstyle = \"bg:color_aqua\"\nformat = '[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)'\n\n[git_status]\nstyle = \"bg:color_aqua\"\nformat = '[[($all_status$ahead_behind )](fg:color_fg0 bg:color_aqua)]($style)'\n\n[nodejs]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[c]\nsymbol = \" \"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[cpp]\nsymbol = \" \"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[rust]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[golang]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[php]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[java]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[kotlin]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[haskell]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[python]\nsymbol = \"\"\nstyle = \"bg:color_blue\"\nformat = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'\n\n[docker_context]\nsymbol = \"\"\nstyle = \"bg:color_bg3\"\nformat = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'\n\n[conda]\nstyle = \"bg:color_bg3\"\nformat = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'\n\n[pixi]\nstyle = \"bg:color_bg3\"\nformat = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($style)'\n\n[time]\ndisabled = false\ntime_format = \"%R\"\nstyle = \"bg:color_bg1\"\nformat = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'\n\n[line_break]\ndisabled = false\n\n[character]\ndisabled = false\nsuccess_symbol = '[](bold fg:color_green)'\nerror_symbol = '[](bold fg:color_red)'\nvimcmd_symbol = '[](bold fg:color_green)'\nvimcmd_replace_one_symbol = '[](bold fg:color_purple)'\nvimcmd_replace_symbol = '[](bold fg:color_purple)'\nvimcmd_visual_symbol = '[](bold fg:color_yellow)'\n",
+    "jetpack": "# version: 1.0.0\n\"$schema\" = 'https://starship.rs/config-schema.json'\n\nadd_newline = true\ncontinuation_prompt = \"[▸▹ ](dimmed white)\"\n\nformat = \"\"\"($nix_shell$container$fill$git_metrics\\n)$cmd_duration\\\n$hostname\\\n$localip\\\n$shlvl\\\n$shell\\\n$env_var\\\n$jobs\\\n$sudo\\\n$username\\\n$character\"\"\"\n\nright_format = \"\"\"\n$singularity\\\n$kubernetes\\\n$directory\\\n$vcsh\\\n$fossil_branch\\\n$git_branch\\\n$git_commit\\\n$git_state\\\n$git_status\\\n$hg_branch\\\n$pijul_channel\\\n$docker_context\\\n$package\\\n$c\\\n$cpp\\\n$cmake\\\n$cobol\\\n$daml\\\n$dart\\\n$deno\\\n$dotnet\\\n$elixir\\\n$elm\\\n$erlang\\\n$fennel\\\n$fortran\\\n$golang\\\n$guix_shell\\\n$haskell\\\n$haxe\\\n$helm\\\n$java\\\n$julia\\\n$kotlin\\\n$gradle\\\n$lua\\\n$nim\\\n$nodejs\\\n$ocaml\\\n$opa\\\n$perl\\\n$php\\\n$pulumi\\\n$purescript\\\n$python\\\n$raku\\\n$rlang\\\n$red\\\n$ruby\\\n$rust\\\n$scala\\\n$solidity\\\n$swift\\\n$terraform\\\n$vlang\\\n$vagrant\\\n$xmake\\\n$zig\\\n$buf\\\n$conda\\\n$pixi\\\n$meson\\\n$spack\\\n$memory_usage\\\n$aws\\\n$gcloud\\\n$openstack\\\n$azure\\\n$crystal\\\n$custom\\\n$status\\\n$os\\\n$battery\\\n$time\"\"\"\n\n[fill]\nsymbol = ' '\n\n[character]\nformat = \"$symbol \"\nsuccess_symbol = \"[◎](bold italic bright-yellow)\"\nerror_symbol = \"[○](italic purple)\"\nvimcmd_symbol = \"[■](italic dimmed green)\"\n# not supported in zsh\nvimcmd_replace_one_symbol = \"◌\"\nvimcmd_replace_symbol = \"□\"\nvimcmd_visual_symbol = \"▼\"\n\n[env_var.VIMSHELL]\nformat = \"[$env_value]($style)\"\nstyle = 'green italic'\n\n[sudo]\nformat = \"[$symbol]($style)\"\nstyle = \"bold italic bright-purple\"\nsymbol = \"⋈┈\"\ndisabled = false\n\n[username]\nstyle_user = \"bright-yellow bold italic\"\nstyle_root = \"purple bold italic\"\nformat = \"[⭘ $user]($style) \"\ndisabled = false\nshow_always = false\n\n[directory]\nhome_symbol = \"⌂\"\ntruncation_length = 2\ntruncation_symbol = \"□ \"\nread_only = \" ◈\"\nuse_os_path_sep = true\nstyle = \"italic blue\"\nformat = '[$path]($style)[$read_only]($read_only_style)'\nrepo_root_style = 'bold blue'\nrepo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) [△](bold bright-blue)'\n\n[cmd_duration]\nformat = \"[◄ $duration ](italic white)\"\n\n[jobs]\nformat = \"[$symbol$number]($style) \"\nstyle = \"white\"\nsymbol = \"[▶](blue italic)\"\n\n[localip]\nssh_only = true\nformat = \" ◯[$localipv4](bold magenta)\"\ndisabled = false\n\n[time]\ndisabled = false\nformat = \"[ $time]($style)\"\ntime_format = \"%R\"\nutc_time_offset = \"local\"\nstyle = \"italic dimmed white\"\n\n[battery]\nformat = \"[ $percentage $symbol]($style)\"\nfull_symbol = \"█\"\ncharging_symbol = \"[↑](italic bold green)\"\ndischarging_symbol = \"↓\"\nunknown_symbol = \"░\"\nempty_symbol = \"▃\"\n\n[[battery.display]]\nthreshold = 20\nstyle = \"italic bold red\"\n\n[[battery.display]]\nthreshold = 60\nstyle = \"italic dimmed bright-purple\"\n\n[[battery.display]]\nthreshold = 70\nstyle = \"italic dimmed yellow\"\n\n[git_branch]\nformat = \" [$branch(:$remote_branch)]($style)\"\nsymbol = \"[△](bold italic bright-blue)\"\nstyle = \"italic bright-blue\"\ntruncation_symbol = \"⋯\"\ntruncation_length = 11\nignore_branches = [\"main\", \"master\"]\nonly_attached = true\n\n[git_metrics]\nformat = '([▴$added]($added_style))([▿$deleted]($deleted_style))'\nadded_style = 'italic dimmed green'\ndeleted_style = 'italic dimmed red'\nignore_submodules = true\ndisabled = false\n\n[git_status]\nstyle = \"bold italic bright-blue\"\nformat = \"([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))\"\nconflicted = \"[◪◦](italic bright-magenta)\"\nahead = \"[▴│[${count}](bold white)│](italic green)\"\nbehind = \"[▿│[${count}](bold white)│](italic red)\"\ndiverged = \"[◇ ▴┤[${ahead_count}](regular white)│▿┤[${behind_count}](regular white)│](italic bright-magenta)\"\nuntracked = \"[◌◦](italic bright-yellow)\"\nstashed = \"[◃◈](italic white)\"\nmodified = \"[●◦](italic yellow)\"\nstaged = \"[▪┤[$count](bold white)│](italic bright-cyan)\"\nrenamed = \"[◎◦](italic bright-blue)\"\ndeleted = \"[✕](italic red)\"\n\n[deno]\nformat = \" [deno](italic) [∫ $version](green bold)\"\nversion_format = \"${raw}\"\n\n[lua]\nformat = \" [lua](italic) [${symbol}${version}]($style)\"\nversion_format = \"${raw}\"\nsymbol = \"⨀ \"\nstyle = \"bold bright-yellow\"\n\n[nodejs]\nformat = \" [node](italic) [◫ ($version)](bold bright-green)\"\nversion_format = \"${raw}\"\ndetect_files = [\"package-lock.json\", \"yarn.lock\"]\ndetect_folders = [\"node_modules\"]\ndetect_extensions = []\n\n[python]\nformat = \" [py](italic) [${symbol}${version}]($style)\"\nsymbol = \"[⌉](bold bright-blue)⌊ \"\nversion_format = \"${raw}\"\nstyle = \"bold bright-yellow\"\n\n[ruby]\nformat = \" [rb](italic) [${symbol}${version}]($style)\"\nsymbol = \"◆ \"\nversion_format = \"${raw}\"\nstyle = \"bold red\"\n\n[rust]\nformat = \" [rs](italic) [$symbol$version]($style)\"\nsymbol = \"⊃ \"\nversion_format = \"${raw}\"\nstyle = \"bold red\"\n\n[package]\nformat = \" [pkg](italic dimmed) [$symbol$version]($style)\"\nversion_format = \"${raw}\"\nsymbol = \"◨ \"\nstyle = \"dimmed yellow italic bold\"\n\n[swift]\nformat = \" [sw](italic) [${symbol}${version}]($style)\"\nsymbol = \"◁ \"\nstyle = \"bold bright-red\"\nversion_format = \"${raw}\"\n\n[aws]\ndisabled = true\nformat = \" [aws](italic) [$symbol $profile $region]($style)\"\nstyle = \"bold blue\"\nsymbol = \"▲ \"\n\n[buf]\nsymbol = \"■ \"\nformat = \" [buf](italic) [$symbol $version $buf_version]($style)\"\n\n[c]\nsymbol = \"ℂ \"\nformat = \" [$symbol($version(-$name))]($style)\"\n\n[cpp]\nsymbol = \"ℂ \"\nformat = \" [$symbol($version(-$name))]($style)\"\n\n[conda]\nsymbol = \"◯ \"\nformat = \" conda [$symbol$environment]($style)\"\n\n[pixi]\nsymbol = \"■ \"\nformat = \" pixi [$symbol$version ($environment )]($style)\"\n\n[dart]\nsymbol = \"◁◅ \"\nformat = \" dart [$symbol($version )]($style)\"\n\n[docker_context]\nsymbol = \"◧ \"\nformat = \" docker [$symbol$context]($style)\"\n\n[elixir]\nsymbol = \"△ \"\nformat = \" exs [$symbol $version OTP $otp_version ]($style)\"\n\n[elm]\nsymbol = \"◩ \"\nformat = \" elm [$symbol($version )]($style)\"\n\n[golang]\nsymbol = \"∩ \"\nformat = \" go [$symbol($version )]($style)\"\n\n[haskell]\nsymbol = \"❯λ \"\nformat = \" hs [$symbol($version )]($style)\"\n\n[java]\nsymbol = \"∪ \"\nformat = \" java [${symbol}(${version} )]($style)\"\n\n[julia]\nsymbol = \"◎ \"\nformat = \" jl [$symbol($version )]($style)\"\n\n[memory_usage]\nsymbol = \"▪▫▪ \"\nformat = \" mem [${ram}( ${swap})]($style)\"\n\n[nim]\nsymbol = \"▴▲▴ \"\nformat = \" nim [$symbol($version )]($style)\"\n\n[nix_shell]\nstyle = 'bold italic dimmed blue'\nsymbol = '✶'\nformat = '[$symbol nix⎪$state⎪]($style) [$name](italic dimmed white)'\nimpure_msg = '[⌽](bold dimmed red)'\npure_msg = '[⌾](bold dimmed green)'\nunknown_msg = '[◌](bold dimmed yellow)'\n\n[spack]\nsymbol = \"◇ \"\nformat = \" spack [$symbol$environment]($style)\"\n",
+    "nerd-font-symbols": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\n[aws]\nsymbol = \" \"\n\n[buf]\nsymbol = \" \"\n\n[bun]\nsymbol = \" \"\n\n[c]\nsymbol = \" \"\n\n[cpp]\nsymbol = \" \"\n\n[cmake]\nsymbol = \" \"\n\n[conda]\nsymbol = \" \"\n\n[crystal]\nsymbol = \" \"\n\n[dart]\nsymbol = \" \"\n\n[deno]\nsymbol = \" \"\n\n[directory]\nread_only = \" 󰌾\"\n\n[docker_context]\nsymbol = \" \"\n\n[elixir]\nsymbol = \" \"\n\n[elm]\nsymbol = \" \"\n\n[fennel]\nsymbol = \" \"\n\n[fortran]\nsymbol = \" \"\n\n[fossil_branch]\nsymbol = \" \"\n\n[gcloud]\nsymbol = \" \"\n\n[git_branch]\nsymbol = \" \"\n\n[git_commit]\ntag_symbol = '  '\n\n[golang]\nsymbol = \" \"\n\n[gradle]\nsymbol = \" \"\n\n[guix_shell]\nsymbol = \" \"\n\n[haskell]\nsymbol = \" \"\n\n[haxe]\nsymbol = \" \"\n\n[hg_branch]\nsymbol = \" \"\n\n[hostname]\nssh_symbol = \" \"\n\n[java]\nsymbol = \" \"\n\n[julia]\nsymbol = \" \"\n\n[kotlin]\nsymbol = \" \"\n\n[lua]\nsymbol = \" \"\n\n[memory_usage]\nsymbol = \"󰍛 \"\n\n[meson]\nsymbol = \"󰔷 \"\n\n[nim]\nsymbol = \"󰆥 \"\n\n[nix_shell]\nsymbol = \" \"\n\n[nodejs]\nsymbol = \" \"\n\n[ocaml]\nsymbol = \" \"\n\n[os.symbols]\nAlpaquita = \" \"\nAlpine = \" \"\nAlmaLinux = \" \"\nAmazon = \" \"\nAndroid = \" \"\nAOSC = \" \"\nArch = \" \"\nArtix = \" \"\nCachyOS = \" \"\nCentOS = \" \"\nDebian = \" \"\nDragonFly = \" \"\nElementary = \" \"\nEmscripten = \" \"\nEndeavourOS = \" \"\nFedora = \" \"\nFreeBSD = \" \"\nGaruda = \"󰛓 \"\nGentoo = \" \"\nHardenedBSD = \"󰞌 \"\nIllumos = \"󰈸 \"\nIos = \"󰀷 \"\nKali = \" \"\nLinux = \" \"\nMabox = \" \"\nMacos = \" \"\nManjaro = \" \"\nMariner = \" \"\nMidnightBSD = \" \"\nMint = \" \"\nNetBSD = \" \"\nNixOS = \" \"\nNobara = \" \"\nOpenBSD = \"󰈺 \"\nopenSUSE = \" \"\nOracleLinux = \"󰌷 \"\nPop = \" \"\nRaspbian = \" \"\nRedhat = \" \"\nRedHatEnterprise = \" \"\nRockyLinux = \" \"\nRedox = \"󰀘 \"\nSolus = \"󰠳 \"\nSUSE = \" \"\nUbuntu = \" \"\nUnknown = \" \"\nVoid = \" \"\nWindows = \"󰍲 \"\nZorin = \" \"\n\n[package]\nsymbol = \"󰏗 \"\n\n[perl]\nsymbol = \" \"\n\n[php]\nsymbol = \" \"\n\n[pijul_channel]\nsymbol = \" \"\n\n[pixi]\nsymbol = \"󰏗 \"\n\n[python]\nsymbol = \" \"\n\n[rlang]\nsymbol = \"󰟔 \"\n\n[ruby]\nsymbol = \" \"\n\n[rust]\nsymbol = \"󱘗 \"\n\n[scala]\nsymbol = \" \"\n\n[status]\nsymbol = \" \"\n\n[swift]\nsymbol = \" \"\n\n[xmake]\nsymbol = \" \"\n\n[zig]\nsymbol = \" \"\n",
+    "no-empty-icons": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\n[buf]\nformat = '(with [$symbol($version )]($style))'\n\n[bun]\nformat = '(via [$symbol($version )]($style))'\n\n[c]\nformat = '(via [$symbol($version(-$name) )]($style))'\n\n[cpp]\nformat = '(via [$symbol($version(-$name) )]($style))'\n\n[cmake]\nformat = '(via [$symbol($version )]($style))'\n\n[cobol]\nformat = '(via [$symbol($version )]($style))'\n\n[crystal]\nformat = '(via [$symbol($version )]($style))'\n\n[daml]\nformat = '(via [$symbol($version )]($style))'\n\n[dart]\nformat = '(via [$symbol($version )]($style))'\n\n[deno]\nformat = '(via [$symbol($version )]($style))'\n\n[dotnet]\nformat = '(via [$symbol($version )(🎯 $tfm )]($style))'\n\n[elixir]\nformat = '(via [$symbol($version \\(OTP $otp_version\\) )]($style))'\n\n[elm]\nformat = '(via [$symbol($version )]($style))'\n\n[erlang]\nformat = '(via [$symbol($version )]($style))'\n\n[fennel]\nformat = '(via [$symbol($version )]($style))'\n\n[fortran]\nformat = \"(via [$symbol($version )]($style))\"\n\n[gleam]\nformat = '(via [$symbol($version )]($style))'\n\n[golang]\nformat = '(via [$symbol($version )]($style))'\n\n[haskell]\nformat = '(via [$symbol($version )]($style))'\n\n[helm]\nformat = '(via [$symbol($version )]($style))'\n\n[java]\nformat = '(via [$symbol($version )]($style))'\n\n[julia]\nformat = '(via [$symbol($version )]($style))'\n\n[kotlin]\nformat = '(via [$symbol($version )]($style))'\n\n[lua]\nformat = '(via [$symbol($version )]($style))'\n\n[nim]\nformat = '(via [$symbol($version )]($style))'\n\n[nodejs]\nformat = '(via [$symbol($version )]($style))'\n\n[ocaml]\nformat = '(via [$symbol($version )(\\($switch_indicator$switch_name\\) )]($style))'\n\n[opa]\nformat = '(via [$symbol($version )]($style))'\n\n[package]\nformat = '(is [$symbol$version]($style) )'\n\n[perl]\nformat = '(via [$symbol($version )]($style))'\n\n[php]\nformat = '(via [$symbol($version )]($style))'\n\n[purescript]\nformat = '(via [$symbol($version )]($style))'\n\n[python]\nformat = '(via [${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style))'\n\n[quarto]\nformat = '(via [$symbol($version )]($style))'\n\n[raku]\nformat = '(via [$symbol($version-$vm_version )]($style))'\n\n[red]\nformat = '(via [$symbol($version )]($style))'\n\n[rlang]\nformat = '(via [$symbol($version )]($style))'\n\n[ruby]\nformat = '(via [$symbol($version )]($style))'\n\n[rust]\nformat = '(via [$symbol($version )]($style))'\n\n[scala]\nformat = '(via [$symbol($version )]($style))'\n\n[swift]\nformat = '(via [$symbol($version )]($style))'\n\n[typst]\nformat = '(via [$symbol($version )]($style))'\n\n[vagrant]\nformat = '(via [$symbol($version )]($style))'\n\n[vlang]\nformat = '(via [$symbol($version )]($style))'\n\n[xmake]\nformat = '(via [$symbol($version )]($style))'\n\n[zig]\nformat = '(via [$symbol($version )]($style))'\n",
+    "no-nerd-font": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\n[battery]\nfull_symbol = \"• \"\ncharging_symbol = \"⇡ \"\ndischarging_symbol = \"⇣ \"\nunknown_symbol = \"❓ \"\nempty_symbol = \"❗ \"\n\n[erlang]\nsymbol = \"ⓔ \"\n\n[fortran]\nsymbol = \"F \"\n\n[nodejs]\nsymbol = \"[⬢](bold green) \"\n\n[pulumi]\nsymbol = \"🧊 \"\n\n[typst]\nsymbol = \"t \"\n",
+    "no-runtime-versions": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\n[bun]\nformat = \"via [$symbol]($style)\"\n\n[buf]\nformat = \"with [$symbol]($style)\"\n\n[c]\nformat = \"via [$symbol($name)]($style)\"\n\n[cmake]\nformat = \"via [$symbol]($style)\"\n\n[cobol]\nformat = \"via [$symbol]($style)\"\n\n[cpp]\nformat = \"via [$symbol($name)]($style)\"\n\n[crystal]\nformat = \"via [$symbol]($style)\"\n\n[daml]\nformat = \"via [$symbol]($style)\"\n\n[dart]\nformat = \"via [$symbol]($style)\"\n\n[deno]\nformat = \"via [$symbol]($style)\"\n\n[dotnet]\nformat = \"[$symbol(🎯 $tfm )]($style)\"\n\n[elixir]\nformat = 'via [$symbol]($style)'\n\n[elm]\nformat = 'via [$symbol]($style)'\n\n[erlang]\nformat = 'via [$symbol]($style)'\n\n[fennel]\nformat = 'via [$symbol]($style)'\n\n[fortran]\nformat = 'via [$symbol]($style)'\n\n[gleam]\nformat = 'via [$symbol]($style)'\n\n[golang]\nformat = 'via [$symbol]($style)'\n\n[gradle]\nformat = 'via [$symbol]($style)'\n\n[haskell]\nformat = 'via [$symbol]($style)'\n\n[haxe]\nformat = 'via [$symbol]($style)'\n\n[helm]\nformat = 'via [$symbol]($style)'\n\n[java]\nformat = 'via [$symbol]($style)'\n\n[julia]\nformat = 'via [$symbol]($style)'\n\n[kotlin]\nformat = 'via [$symbol]($style)'\n\n[lua]\nformat = 'via [$symbol]($style)'\n\n[meson]\nformat = 'via [$symbol]($style)'\n\n[mojo]\nformat = 'with [$symbol]($style)'\n\n[nim]\nformat = 'via [$symbol]($style)'\n\n[nodejs]\nformat = 'via [$symbol]($style)'\n\n[ocaml]\nformat = 'via [$symbol(\\($switch_indicator$switch_name\\) )]($style)'\n\n[odin]\nformat = 'via [$symbol]($style)'\n\n[opa]\nformat = 'via [$symbol]($style)'\n\n[perl]\nformat = 'via [$symbol]($style)'\n\n[php]\nformat = 'via [$symbol]($style)'\n\n[pixi]\nformat = 'via [$symbol($environment )]($style)'\n\n[pulumi]\nformat = 'via [$symbol$stack]($style)'\n\n[purescript]\nformat = 'via [$symbol]($style)'\n\n[python]\nformat = 'via [$symbol]($style)'\n\n[quarto]\nformat = 'via [$symbol]($style)'\n\n[raku]\nformat = 'via [$symbol]($style)'\n\n[red]\nformat = 'via [$symbol]($style)'\n\n[rlang]\nformat = 'via [$symbol]($style)'\n\n[ruby]\nformat = 'via [$symbol]($style)'\n\n[rust]\nformat = 'via [$symbol]($style)'\n\n[scala]\nformat = 'via [$symbol]($style)'\n\n[solidity]\nformat = 'via [$symbol]($style)'\n\n[swift]\nformat = 'via [$symbol]($style)'\n\n[typst]\nformat = 'via [$symbol]($style)'\n\n[vagrant]\nformat = 'via [$symbol]($style)'\n\n[vlang]\nformat = 'via [$symbol]($style)'\n\n[xmake]\nformat = \"via [$symbol]($style)\"\n\n[zig]\nformat = 'via [$symbol]($style)'\n",
+    "pastel-powerline": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\nformat = \"\"\"\n[](#9A348E)\\\n$os\\\n$username\\\n[](bg:#DA627D fg:#9A348E)\\\n$directory\\\n[](fg:#DA627D bg:#FCA17D)\\\n$git_branch\\\n$git_status\\\n[](fg:#FCA17D bg:#86BBD8)\\\n$c\\\n$elixir\\\n$elm\\\n$golang\\\n$gradle\\\n$haskell\\\n$java\\\n$julia\\\n$nodejs\\\n$nim\\\n$rust\\\n$scala\\\n[](fg:#86BBD8 bg:#06969A)\\\n$docker_context\\\n[](fg:#06969A bg:#33658A)\\\n$time\\\n[ ](fg:#33658A)\\\n\"\"\"\n\n# Disable the blank line at the start of the prompt\n# add_newline = false\n\n# You can also replace your username with a neat symbol like   or disable this\n# and use the os module below\n[username]\nshow_always = true\nstyle_user = \"bg:#9A348E\"\nstyle_root = \"bg:#9A348E\"\nformat = '[$user ]($style)'\ndisabled = false\n\n# An alternative to the username module which displays a symbol that\n# represents the current operating system\n[os]\nstyle = \"bg:#9A348E\"\ndisabled = true # Disabled by default\n\n[directory]\nstyle = \"bg:#DA627D\"\nformat = \"[ $path ]($style)\"\ntruncation_length = 3\ntruncation_symbol = \"…/\"\n\n# Here is how you can shorten some long paths by text replacement\n# similar to mapped_locations in Oh My Posh:\n[directory.substitutions]\n\"Documents\" = \"󰈙 \"\n\"Downloads\" = \" \"\n\"Music\" = \" \"\n\"Pictures\" = \" \"\n# Keep in mind that the order matters. For example:\n# \"Important Documents\" = \" 󰈙 \"\n# will not be replaced, because \"Documents\" was already substituted before.\n# So either put \"Important Documents\" before \"Documents\" or use the substituted version:\n# \"Important 󰈙 \" = \" 󰈙 \"\n\n[c]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[cpp]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[docker_context]\nsymbol = \" \"\nstyle = \"bg:#06969A\"\nformat = '[ $symbol $context ]($style)'\n\n[elixir]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[elm]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[git_branch]\nsymbol = \"\"\nstyle = \"bg:#FCA17D\"\nformat = '[ $symbol $branch ]($style)'\n\n[git_status]\nstyle = \"bg:#FCA17D\"\nformat = '[$all_status$ahead_behind ]($style)'\n\n[golang]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[gradle]\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[haskell]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[java]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[julia]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[nodejs]\nsymbol = \"\"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[nim]\nsymbol = \"󰆥 \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[rust]\nsymbol = \"\"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[scala]\nsymbol = \" \"\nstyle = \"bg:#86BBD8\"\nformat = '[ $symbol ($version) ]($style)'\n\n[time]\ndisabled = false\ntime_format = \"%R\" # Hour:Minute Format\nstyle = \"bg:#33658A\"\nformat = '[ ♥ $time ]($style)'\n",
+    "plain-text-symbols": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\ncontinuation_prompt = \"[.](bright-black) \"\n\n[character]\nsuccess_symbol = \"[>](bold green)\"\nerror_symbol = \"[x](bold red)\"\nvimcmd_symbol = \"[<](bold green)\"\nvimcmd_visual_symbol = \"[<](bold yellow)\"\nvimcmd_replace_symbol = \"[<](bold purple)\"\nvimcmd_replace_one_symbol = \"[<](bold purple)\"\n\n[git_commit]\ntag_symbol = \" tag \"\n\n[git_status]\nahead = \">\"\nbehind = \"<\"\ndiverged = \"<>\"\nrenamed = \"r\"\ndeleted = \"x\"\n\n[aws]\nsymbol = \"aws \"\n\n[azure]\nsymbol = \"az \"\n\n[battery]\nfull_symbol = \"full \"\ncharging_symbol = \"charging \"\ndischarging_symbol = \"discharging \"\nunknown_symbol = \"unknown \"\nempty_symbol = \"empty \"\n\n[buf]\nsymbol = \"buf \"\n\n[bun]\nsymbol = \"bun \"\n\n[c]\nsymbol = \"C \"\n\n[cpp]\nsymbol = \"C++ \"\n\n[cobol]\nsymbol = \"cobol \"\n\n[conda]\nsymbol = \"conda \"\n\n[container]\nsymbol = \"container \"\n\n[crystal]\nsymbol = \"cr \"\n\n[cmake]\nsymbol = \"cmake \"\n\n[daml]\nsymbol = \"daml \"\n\n[dart]\nsymbol = \"dart \"\n\n[deno]\nsymbol = \"deno \"\n\n[dotnet]\nformat = \"via [$symbol($version )(target $tfm )]($style)\"\nsymbol = \".NET \"\n\n[directory]\nread_only = \" ro\"\n\n[docker_context]\nsymbol = \"docker \"\n\n[elixir]\nsymbol = \"exs \"\n\n[elm]\nsymbol = \"elm \"\n\n[erlang]\nsymbol = \"erl \"\n\n[fennel]\nsymbol = \"fnl \"\n\n[fortran]\nsymbol = \"fortran \"\n\n[fossil_branch]\nsymbol = \"fossil \"\ntruncation_symbol = \"...\"\n\n[gcloud]\nsymbol = \"gcp \"\n\n[git_branch]\nsymbol = \"git \"\ntruncation_symbol = \"...\"\n\n[gleam]\nsymbol = \"gleam \"\n\n[golang]\nsymbol = \"go \"\n\n[gradle]\nsymbol = \"gradle \"\n\n[guix_shell]\nsymbol = \"guix \"\n\n[haskell]\nsymbol = \"haskell \"\n\n[haxe]\nsymbol = \"hx \"\n\n[helm]\nsymbol = \"helm \"\n\n[hg_branch]\nsymbol = \"hg \"\ntruncation_symbol = \"...\"\n\n[hostname]\nssh_symbol = \"ssh \"\n\n[java]\nsymbol = \"java \"\n\n[jobs]\nsymbol = \"*\"\n\n[julia]\nsymbol = \"jl \"\n\n[kotlin]\nsymbol = \"kt \"\n\n[kubernetes]\nsymbol = \"kubernetes \"\n\n[lua]\nsymbol = \"lua \"\n\n[nodejs]\nsymbol = \"nodejs \"\n\n[memory_usage]\nsymbol = \"memory \"\n\n[meson]\nsymbol = \"meson \"\ntruncation_symbol = \"...\"\n\n[mojo]\nsymbol = \"mojo \"\n\n[nats]\nsymbol = \"nats \"\n\n[netns]\nsymbol = \"netns \"\n\n[nim]\nsymbol = \"nim \"\n\n[nix_shell]\nsymbol = \"nix \"\n\n[ocaml]\nsymbol = \"ml \"\n\n[odin]\nsymbol = \"odin \"\n\n[opa]\nsymbol = \"opa \"\n\n[openstack]\nsymbol = \"openstack \"\n\n[os.symbols]\nAIX = \"aix \"\nAlpaquita = \"alq \"\nAlmaLinux = \"alma \"\nAlpine = \"alp \"\nALTLinux = \"alt \"\nAmazon = \"amz \"\nAndroid = \"andr \"\nAOSC = \"aosc \"\nArch = \"rch \"\nArtix = \"atx \"\nBluefin = \"blfn \"\nCachyOS = \"cach \"\nCentOS = \"cent \"\nDebian = \"deb \"\nDragonFly = \"dfbsd \"\nElementary = \"elem \"\nEmscripten = \"emsc \"\nEndeavourOS = \"ndev \"\nFedora = \"fed \"\nFreeBSD = \"fbsd \"\nGaruda = \"garu \"\nGentoo = \"gent \"\nHardenedBSD = \"hbsd \"\nIllumos = \"lum \"\nIos = \"ios \"\nInstantOS = \"inst \"\nKali = \"kali \"\nLinux = \"lnx \"\nMabox = \"mbox \"\nMacos = \"mac \"\nManjaro = \"mjo \"\nMariner = \"mrn \"\nMidnightBSD = \"mid \"\nMint = \"mint \"\nNetBSD = \"nbsd \"\nNixOS = \"nix \"\nNobara = \"nbra \"\nOpenBSD = \"obsd \"\nOpenCloudOS = \"ocos \"\nopenEuler = \"oeul \"\nopenSUSE = \"osuse \"\nOracleLinux = \"orac \"\nPikaOS = \"pika \"\nPop = \"pop \"\nRaspbian = \"rasp \"\nRedhat = \"rhl \"\nRedHatEnterprise = \"rhel \"\nRockyLinux = \"rky \"\nRedox = \"redox \"\nSolus = \"sol \"\nSUSE = \"suse \"\nUbuntu = \"ubnt \"\nUltramarine = \"ultm \"\nUnknown = \"unk \"\nUos = \"uos \"\nVoid = \"void \"\nWindows = \"win \"\nZorin = \"zorn \"\n\n[package]\nsymbol = \"pkg \"\n\n[perl]\nsymbol = \"pl \"\n\n[php]\nsymbol = \"php \"\n\n[pijul_channel]\nsymbol = \"pijul \"\ntruncation_symbol = \"...\"\n\n[pixi]\nsymbol = \"pixi \"\n\n[pulumi]\nsymbol = \"pulumi \"\n\n[purescript]\nsymbol = \"purs \"\n\n[python]\nsymbol = \"py \"\n\n[quarto]\nsymbol = \"quarto \"\n\n[raku]\nsymbol = \"raku \"\n\n[red]\nsymbol = \"red \"\n\n[rlang]\nsymbol = \"r \"\n\n[ruby]\nsymbol = \"rb \"\n\n[rust]\nsymbol = \"rs \"\n\n[scala]\nsymbol = \"scala \"\n\n[shlvl]\nsymbol = \"shlvl \"\n\n[spack]\nsymbol = \"spack \"\n\n[solidity]\nsymbol = \"solidity \"\n\n[status]\nsymbol = \"[x](bold red) \"\nnot_executable_symbol = \"noexec\"\nnot_found_symbol = \"notfound\"\nsigint_symbol = \"sigint\"\nsignal_symbol = \"sig\"\n\n[sudo]\nsymbol = \"sudo \"\n\n[swift]\nsymbol = \"swift \"\n\n[typst]\nsymbol = \"typst \"\n\n[vagrant]\nsymbol = \"vagrant \"\n\n[terraform]\nsymbol = \"terraform \"\n\n[xmake]\nsymbol = \"xmake \"\n\n[zig]\nsymbol = \"zig \"\n",
+    "pure-preset": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\nformat = \"\"\"\n$username\\\n$hostname\\\n$directory\\\n$git_branch\\\n$git_state\\\n$git_status\\\n$cmd_duration\\\n$line_break\\\n$python\\\n$character\"\"\"\n\n[directory]\nstyle = \"blue\"\n\n[character]\nsuccess_symbol = \"[❯](purple)\"\nerror_symbol = \"[❯](red)\"\nvimcmd_symbol = \"[❮](green)\"\n\n[git_branch]\nformat = \"[$branch]($style)\"\nstyle = \"bright-black\"\n\n[git_status]\nformat = \"[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)\"\nstyle = \"cyan\"\nconflicted = \"​\"\nuntracked = \"​\"\nmodified = \"​\"\nstaged = \"​\"\nrenamed = \"​\"\ndeleted = \"​\"\nstashed = \"≡\"\n\n[git_state]\nformat = '\\([$state( $progress_current/$progress_total)]($style)\\) '\nstyle = \"bright-black\"\n\n[cmd_duration]\nformat = \"[$duration]($style) \"\nstyle = \"yellow\"\n\n[python]\nformat = \"[$virtualenv]($style) \"\nstyle = \"bright-black\"\ndetect_extensions = []\ndetect_files = []\n",
+    "tokyo-night": "\"$schema\" = 'https://starship.rs/config-schema.json'\n\nformat = \"\"\"\n[░▒▓](#a3aed2)\\\n[  ](bg:#a3aed2 fg:#090c0c)\\\n[](bg:#769ff0 fg:#a3aed2)\\\n$directory\\\n[](fg:#769ff0 bg:#394260)\\\n$git_branch\\\n$git_status\\\n[](fg:#394260 bg:#212736)\\\n$nodejs\\\n$rust\\\n$golang\\\n$php\\\n[](fg:#212736 bg:#1d2230)\\\n$time\\\n[ ](fg:#1d2230)\\\n\\n$character\"\"\"\n\n[directory]\nstyle = \"fg:#e3e5e5 bg:#769ff0\"\nformat = \"[ $path ]($style)\"\ntruncation_length = 3\ntruncation_symbol = \"…/\"\n\n[directory.substitutions]\n\"Documents\" = \"󰈙 \"\n\"Downloads\" = \" \"\n\"Music\" = \" \"\n\"Pictures\" = \" \"\n\n[git_branch]\nsymbol = \"\"\nstyle = \"bg:#394260\"\nformat = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'\n\n[git_status]\nstyle = \"bg:#394260\"\nformat = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'\n\n[nodejs]\nsymbol = \"\"\nstyle = \"bg:#212736\"\nformat = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'\n\n[rust]\nsymbol = \"\"\nstyle = \"bg:#212736\"\nformat = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'\n\n[golang]\nsymbol = \"\"\nstyle = \"bg:#212736\"\nformat = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'\n\n[php]\nsymbol = \"\"\nstyle = \"bg:#212736\"\nformat = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'\n\n[time]\ndisabled = false\ntime_format = \"%R\" # Hour:Minute Format\nstyle = \"bg:#1d2230\"\nformat = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'\n"
+  },
+  "samplePreview": {
+    "prompt": "\u001b[J\n\u001b[1;33mbdmorin\u001b[0m in \u001b[1;2;32m🌐 p0x\u001b[0m in \u001b[1;36mastronaut/src/rocket-ship\u001b[0m on \u001b[1;34m☁️  bmorin@provisioniam.com\u001b[0m \n\u001b[1;32m❯\u001b[0m ",
+    "explain": "\n Here's a breakdown of your prompt:\n \u001b[1;33mbdmorin\u001b[0m in                      -  The active user's username\n \u001b[1;2;32m🌐 p0x\u001b[0m in                       -  The system hostname\n \u001b[1;36mastronaut/src/rocket-ship\u001b[0m       -  The current working directory\n on \u001b[1;34m☁️  bmorin@provisioniam.com\u001b[0m   -  The current GCP client configuration\n \u001b[1;32m❯\u001b[0m                               -  A character (usually an arrow) beside where the text is entered in your terminal\n",
+    "stderr": ""
+  }
+}
