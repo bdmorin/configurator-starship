@@ -29,6 +29,18 @@ if (!which.stdout.toString().trim()) {
   process.exit(1);
 }
 
+if (!existsSync(join(ROOT, "node_modules", ".bin", "vite"))) {
+  console.log("Installing dependencies (one-time)…");
+  const install = spawn({
+    cmd: ["bun", "install"],
+    cwd: ROOT,
+    stdout: "inherit",
+    stderr: "inherit",
+  });
+  const code = await install.exited;
+  if (code !== 0) fail("Install failed.", code ?? 1);
+}
+
 if (!existsSync(join(ROOT, "dist", "index.html"))) {
   console.log("First-run build (one-time, ~30s)…");
   const build = spawn({
